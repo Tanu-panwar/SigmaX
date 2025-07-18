@@ -2,12 +2,13 @@ import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
 import { useContext, useState, useEffect } from "react";
-import {ScaleLoader} from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 
 function ChatWindow() {
-    const {prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat} = useContext(MyContext);
+    const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isLogo, setIsLogo] = useState(false);
 
     const getReply = async () => {
         setLoading(true);
@@ -30,20 +31,39 @@ function ChatWindow() {
             const res = await response.json();
             console.log(res);
             setReply(res.reply);
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         }
         setLoading(false);
     }
 
+    //useeffect for close dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            const isDropdown = event.target.closest('.dropDownUser') || event.target.closest('.dropDownLogo');
+            const isButton = event.target.closest('.sigma-logo') || event.target.closest('.userIconDiv');
+
+            if (!isDropdown && !isButton) {
+                setIsOpen(false);
+                setIsLogo(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, []);
+
+
     //Append new chat to prevChats
     useEffect(() => {
-        if(prompt && reply) {
+        if (prompt && reply) {
             setPrevChats(prevChats => (
                 [...prevChats, {
                     role: "user",
                     content: prompt
-                },{
+                }, {
                     role: "assistant",
                     content: reply
                 }]
@@ -57,36 +77,52 @@ function ChatWindow() {
     const handleProfileClick = () => {
         setIsOpen(!isOpen);
     }
+    const handleLogoClick = () => {
+        setIsLogo(!isLogo);
+    }
 
     return (
         <div className="chatWindow">
             <div className="navbar">
-                <span>SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
+                <div className="sigma-logo" onClick={handleLogoClick}>
+                    <span className="title-button">SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
+                </div>
                 <div className="userIconDiv" onClick={handleProfileClick}>
                     <span className="userIcon"><i className="fa-solid fa-user"></i></span>
                 </div>
             </div>
-            {
-                isOpen && 
-                <div className="dropDown">
-                    <div className="dropDownItem"><i class="fa-solid fa-gear"></i> Settings</div>
-                    <div className="dropDownItem"><i class="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
-                    <div className="dropDownItem"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+            {isLogo && (
+                <div className="dropDownLogo">
+                    <div className="dropDownItem">SigmaGPT Plus <i className="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <div className="dropDownItem">SigmaGPT <i className="fa-solid fa-comments"></i></div>
                 </div>
-            }
+            )}
+
+            {isOpen && (
+                <div className="dropDownUser">
+                    <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
+                    <div className="dropDownItem"><i className="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
+                    <div className="dropDownItem"><i className="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                </div>
+            )}
+
             <Chat></Chat>
 
-            <ScaleLoader color="#fff" loading={loading}>
-            </ScaleLoader>
-            
+            {loading && (
+                <div className="loader">
+                    <ScaleLoader color="#fff" loading={loading} />
+                </div>
+            )}
+
+
             <div className="chatInput">
                 <div className="inputBox">
                     <input placeholder="Ask anything"
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
-                        onKeyDown={(e) => e.key === 'Enter'? getReply() : ''}
+                        onKeyDown={(e) => e.key === 'Enter' ? getReply() : ''}
                     >
-                           
+
                     </input>
                     <div id="submit" onClick={getReply}><i className="fa-solid fa-paper-plane"></i></div>
                 </div>

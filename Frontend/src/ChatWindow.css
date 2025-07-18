@@ -1,3 +1,7 @@
+/* * {
+    box-sizing: border-box;
+} */
+
 .chatWindow {
     background-color: #212121;
     height: 100vh;
@@ -16,20 +20,54 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .navbar span {
-    margin: 1rem 2rem;
+    max-width: 80%;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+}
+
+.navbar .logo-text {
+    max-width: 80%;
+    white-space: nowrap;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+}
+
+
+.navbar i {
+    color: rgb(255, 522, 255, 0.6);
+    font-size: 0.8rem;
+}
+
+.title-button {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
 }
 
 .userIconDiv {
-    margin: 1rem 2rem;
+    margin: 1rem 1rem;
+}
+
+.sigma-logo {
+    margin: 0.5rem 0.5rem;
+    position: relative;
+    display: inline-block;
 }
 
 .userIcon {
     background-color: #339cff;
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 35px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -63,10 +101,10 @@ input {
     font-size: 0.8rem;
     border-radius: 14px;
     box-shadow: rgba(0, 0, 0, 0.05) 0 54px 55px,
-                rgba(0, 0, 0, 0.05) 0 -12px 30px,
-                rgba(0, 0, 0, 0.05) 0 4px 6px,
-                rgba(0, 0, 0, 0.05) 0 12px 3px,
-                rgba(0, 0, 0, 0.05) 0 -3px 5px;
+        rgba(0, 0, 0, 0.05) 0 -12px 30px,
+        rgba(0, 0, 0, 0.05) 0 4px 6px,
+        rgba(0, 0, 0, 0.05) 0 12px 3px,
+        rgba(0, 0, 0, 0.05) 0 -3px 5px;
 }
 
 input:focus {
@@ -95,14 +133,36 @@ input:focus {
     color: #b4b4b4;
 }
 
+.loader {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    z-index: 100;
+    border: none;
+}
+
+
 /* dropdown css */
 
-.dropDown {
-    position: absolute;
+.dropDownUser {
+    position: fixed;
     top: 4rem;
     right: 4rem;
     width: 150px;
 
+    background-color: #323232;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    text-align: left;
+    z-index: 1000;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropDownLogo {
+    position: absolute;
+    /* top: 100%; right below logo */
+    left: 0;
+    transform: translate(21rem, 3rem);
     background-color: #323232;
     padding: 0.3rem 0.5rem;
     border-radius: 6px;
@@ -122,4 +182,119 @@ input:focus {
 .dropDownItem:hover {
     background-color: rgba(180, 180, 180, 0.1);
     border-radius: 6px;
+}
+
+@media screen and (max-width: 768px) {
+    .chatWindow {
+        height: 100vh;
+        width: 100vw;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar span {
+        max-width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .navbar i {
+        color: rgb(255, 522, 255, 0.6);
+        font-size: 0.8rem;
+        width: 100%;
+
+    }
+
+    .dropDownUser {
+        top: 3.5rem;
+        right: 3.5rem;
+        width: 135px;
+        font-size: 0.8rem;
+    }
+
+    .dropDownLogo {
+        bottom: 91%;
+        left: -17rem;
+        width: 135px;
+        font-size: 0.8rem;
+    }
+
+
+    .inputBox {
+        max-width: 95%;
+        padding: 0 0.5rem;
+    }
+
+    input {
+        padding: 12px;
+        font-size: 0.75rem;
+        border-radius: 10px;
+    }
+
+    #submit {
+        height: 30px;
+        width: 30px;
+        font-size: 16px;
+        right: 10px;
+    }
+
+    .info {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .userIcon {
+        height: 23px;
+        width: 23px;
+        font-size: 0.8rem;
+    }
+
+    .dropDownItem {
+        padding: 0.3rem;
+        font-size: 12.5px;
+    }
+}
+
+/* HAMBURGER ICON STYLE */
+
+/* .hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+}
+
+.hamburger span {
+    height: 3px;
+    width: 22px;
+    background: #ffffff;
+    margin: 3px 0;
+    border-radius: 2px;
+} */
+
+/* SHOW HAMBURGER IN MOBILE VIEW */
+
+@media screen and (max-width: 768px) {
+    /* .hamburger {
+        display: flex;
+    } */
+
+    .navbar span {
+        font-size: 0.9rem;
+        margin: 0 0.5rem;
+        max-width: 80%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
