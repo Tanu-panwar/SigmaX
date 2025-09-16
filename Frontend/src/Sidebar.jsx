@@ -24,10 +24,21 @@ function Sidebar() {
         try {
             const response = await fetch("http://localhost:8080/api/thread");
             const res = await response.json();
-            const filteredData = res.map(thread => ({ threadId: thread.threadId, title: thread.title }));
-            setAllThreads(filteredData);
+            console.log("API /api/thread response:", res);
+
+            if (Array.isArray(res)) {
+                const filteredData = res.map(thread => ({
+                    threadId: thread.threadId,
+                    title: thread.title,
+                }));
+                setAllThreads(filteredData);
+            } else {
+                console.error("Unexpected response:", res);
+                setAllThreads([]);
+            }
         } catch (err) {
-            console.log(err);
+            console.error("Failed to fetch threads:", err);
+            setAllThreads([]);
         }
     };
 
