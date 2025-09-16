@@ -9,11 +9,23 @@ import chatRoutes from './routes/chat.js';
 const app = express();
 const PORT = 8080;
 
+const allowedOrigins = [
+  "http://localhost:5173",           // Local dev
+  "https://sigma-x-eight.vercel.app" // Deployed frontend
+];
+
 // Middleware
 app.use(express.json());
 
 app.use(cors({
-  origin: "http://localhost:5173",  // ✅ Frontend URL
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow non-browser requests
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = "The CORS policy for this site does not allow access from the specified Origin.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
