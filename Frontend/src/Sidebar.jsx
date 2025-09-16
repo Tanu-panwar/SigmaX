@@ -4,6 +4,7 @@ import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
+import logo from './assets/whitelogo.png';
 
 function Sidebar() {
     const { allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats } = useContext(MyContext);
@@ -97,7 +98,7 @@ function Sidebar() {
             {showSidebar && (
                 <section className="sidebar">
                     <button className="new-chat-btn" onClick={createNewChat}>
-                        <img src="src/assets/whitelogo.png" alt="gpt logo" className="logo" />
+                        <img src={logo} alt="gpt logo" />
                         <span><i className="fa-solid fa-pen-to-square"></i></span>
                     </button>
                     <div className="chat"></div>
