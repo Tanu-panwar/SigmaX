@@ -85,7 +85,7 @@ function ChatWindow() {
         <div className="chatWindow">
             <div className="navbar">
                 <div className="sigma-logo" onClick={handleLogoClick}>
-                    <span className="title-button">SigmaGPT <i className="fa-solid fa-chevron-down"></i></span>
+                    <span className="title-button">SigmaX <i className="fa-solid fa-chevron-down"></i></span>
                 </div>
                 <div className="userIconDiv" onClick={handleProfileClick}>
                     <span className="userIcon"><i className="fa-solid fa-user"></i></span>
@@ -93,8 +93,8 @@ function ChatWindow() {
             </div>
             {isLogo && (
                 <div className="dropDownLogo">
-                    <div className="dropDownItem">SigmaGPT Plus <i className="fa-solid fa-wand-magic-sparkles"></i></div>
-                    <div className="dropDownItem">SigmaGPT <i className="fa-solid fa-comments"></i></div>
+                    <div className="dropDownItem">SigmaX Plus <i className="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <div className="dropDownItem">SigmaX <i className="fa-solid fa-comments"></i></div>
                 </div>
             )}
 
@@ -127,7 +127,7 @@ function ChatWindow() {
                     <div id="submit" onClick={getReply}><i className="fa-solid fa-paper-plane"></i></div>
                 </div>
                 <p className="info">
-                    SigmaGPT can make mistakes. Check important info. See Cookie Preferences.
+                    SigmaX can make mistakes. Check important info. See Cookie Preferences.
                 </p>
             </div>
         </div>
